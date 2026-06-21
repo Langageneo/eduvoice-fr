@@ -1,0 +1,60 @@
+# EduVoice FR™ - Docker Compose
+# Fichier: docker/docker-compose.yml
+
+version: '3.8'
+
+services:
+  # Backend FastAPI
+  backend:
+    build:
+      context: ../backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - REDIS_URL=redis://redis:6379
+      - POSTGRES_URL=postgresql://user:password@postgres:5432/eduvoice
+    depends_on:
+      - redis
+      - postgres
+    volumes:
+      - ../backend:/app
+    restart: unless-stopped
+
+  # Redis (Cache)
+  redis:
+    image: redis:7.2
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    restart: unless-stopped
+
+  # PostgreSQL (Base de données)
+  postgres:
+    image: postgres:15
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=eduvoice
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  # PGAdmin (Optionnel, pour gérer PostgreSQL)
+  pgadmin:
+    image: dpage/pgadmin4:8.3
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@eduvoice.fr
+      - PGADMIN_DEFAULT_PASSWORD=admin
+    ports:
+      - "5050:80"
+    depends_on:
+      - postgres
+    restart: unless-stopped
+
+volumes:
+  redis_data:
+  postgres_data:

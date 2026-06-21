@@ -1,0 +1,35 @@
+# EduVoice FR™ - Backend Requirements
+# Fichier: backend/requirements.txt
+
+# FastAPI + WebSocket
+fastapi==0.109.0
+uvicorn==0.27.0
+python-multipart==0.0.6
+python-socketio==5.11.2
+
+# Redis (Cache)
+redis==5.0.1
+aioredis==2.0.1
+
+# Base de données
+sqlalchemy==2.0.23
+psycopg2-binary==2.9.9
+alembic==1.13.1
+
+# Modèles IA
+# Faster-Whisper (STT)
+whisper-faster==0.11.0
+ctranslate2==3.24.0
+
+# NLLB-200 (Traduction)
+sentencepiece==0.2.0
+transformers==4.38.2
+torch==2.2.0
+
+# Piper TTS (Synthèse vocale)
+piper-tts==0.0.1
+
+# Autres
+pydantic==2.5.3
+python-dotenv==1.0.0
+logging==0.4.9.6
